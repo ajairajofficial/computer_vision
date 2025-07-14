@@ -4,6 +4,7 @@ rmdir /s /q venv
 /s means recursively subfolders /q means do it quietly without much prompts.
 
 
+############################################################################################################################
 create an env in the current folder 
 get into cmd on ide terminal
 conda create -p venv python==3.9       (create a new env in the current folder) -p says in current folder, venv is the name of the env
@@ -16,6 +17,7 @@ conda install opencv numpy -c conda-forge
 pip install face_recognition dlib
 # inorder to install 
 
+#############################################################################################################################
 
 Also create a txt file inside the folder as requirements.txt and write all the packages needed. 
 Then in terminal do pip install -r requirements.txt and it will install all in one go.
