@@ -97,6 +97,11 @@ def main():
     for person, encodings in known_faces.items():
         print(f"- {person}: {len(encodings)} training images")
 
+    ajai_raj_detected = False  # Track if Ajai_Raj is currently detected
+    access_granted = False    # Track if any known face is detected
+    access_denied = False     # Track if only unknown faces are detected
+    special_access_granted = False  # Track if Ajai_Raj is detected
+
     while True:
         # Capture frame-by-frame
         ret, frame = video_capture.read()
@@ -109,6 +114,7 @@ def main():
         # Get face encodings for any faces in the frame
         face_encodings = face_recognition.face_encodings(frame, face_locations)
 
+        detected_names = set()
         # Loop through each face in this frame
         for (top, right, bottom, left), face_encoding in zip(face_locations, face_encodings):
             name = "Unknown"
@@ -125,6 +131,7 @@ def main():
                         confidence = match_confidence
                         name = person_name
 
+            detected_names.add(name)
             # Draw a box around the face
             cv2.rectangle(frame, (left, top), (right, bottom), (0, 255, 0), 2)
 
@@ -133,6 +140,32 @@ def main():
             cv2.rectangle(frame, (left, bottom - 35), (right, bottom), (0, 255, 0), cv2.FILLED)
             font = cv2.FONT_HERSHEY_DUPLEX
             cv2.putText(frame, label, (left + 6, bottom - 6), font, 0.6, (255, 255, 255), 1)
+
+        # Access control logic
+        if detected_names:
+            if all(n == "Unknown" for n in detected_names):
+                if not access_denied:
+                    print("Access Denied")
+                    access_denied = True
+                    access_granted = False
+                    special_access_granted = False
+            elif "Ajai_Raj" in detected_names:
+                if not special_access_granted:
+                    print("Ajai_Raj: Special Access Granted")
+                    special_access_granted = True
+                    access_granted = False
+                    access_denied = False
+            else:
+                if not access_granted:
+                    print("Access Granted")
+                    access_granted = True
+                    access_denied = False
+                    special_access_granted = False
+        else:
+            # No faces detected, reset all
+            access_granted = False
+            access_denied = False
+            special_access_granted = False
 
         # Display the resulting frame
         cv2.imshow('Video', frame)
