@@ -1,0 +1,23 @@
+# Stable PyTorch CPU version for Windows
+torch==2.2.0
+torchvision==0.17.0
+torchaudio==2.2.0
+
+# Computer Vision
+opencv-python
+opencv-contrib-python
+
+# Barcode reading support
+pyzbar
+
+# YOLOv5 - maintained by Ultralytics
+ultralytics
+
+# Plotting and training tools
+matplotlib
+seaborn
+pandas
+tqdm
+
+# For labeling images (manual annotation)
+labelImg
