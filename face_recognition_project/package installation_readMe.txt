@@ -17,6 +17,11 @@ conda install opencv numpy -c conda-forge
 pip install face_recognition dlib
 # inorder to install 
 
+for excel output
+pip install openpyxl
+
+for google spreadsheet
+pip install gspread google-auth
 #############################################################################################################################
 
 Also create a txt file inside the folder as requirements.txt and write all the packages needed. 
